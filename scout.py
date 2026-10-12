@@ -20,8 +20,9 @@ def scout(username, time_class="rapid", max_games=200):
     baseline = build_baseline(peers, time_class=time_class)
     baseline.to_csv(f"data/processed/{username}_baseline.csv")
 
-    z = zscores(baseline, player_features(gdf, evals))
-    return write_report(username, gdf, moves, z)
+    feats = player_features(gdf, evals)
+    z = zscores(baseline, feats)
+    return write_report(username, gdf, moves, z, feats, baseline.mean())
 
 if __name__ == "__main__":
     name = sys.argv[1]
